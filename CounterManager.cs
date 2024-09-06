@@ -14,6 +14,12 @@ public class CounterManager
         }
     }
 
+    public void Cleanup(TaskEntityContext context)
+    {
+        var entityId = new EntityInstanceId(nameof(Counter), "myCounter");
+        context.SignalEntity(entityId, "Delete");
+    }
+
     [Function(nameof(CounterManager))]
     public static Task RunEntityAsync([EntityTrigger] TaskEntityDispatcher dispatcher)
         => dispatcher.DispatchAsync<CounterManager>();
